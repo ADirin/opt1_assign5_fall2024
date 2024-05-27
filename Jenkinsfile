@@ -4,17 +4,18 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dir('src/main/java') {
-                    bat 'javac Account.java'
+                dir('C:\\Users\\amirdi\\IdeaProjects\\UnitTest') {
+                    bat 'mvn compile' // Compile source code using Maven
                 }
             }
         }
         stage('Test') {
             steps {
-                dir('src/test/java') {
-                    bat 'java -cp .;junit-4.12.jar;hamcrest-core-1.3.jar org.junit.runner.JUnitCore AccountTest'
+                dir('C:\\Users\\amirdi\\IdeaProjects\\UnitTest') {
+                    bat 'mvn test' // Run tests using Maven
                 }
             }
         }
     }
 }
+
