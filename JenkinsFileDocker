@@ -1,0 +1,26 @@
+pipeline {
+    agent {
+        docker { 
+            image 'docker:stable' 
+            args '-v /var/run/docker.sock:/var/run/docker.sock' 
+        }
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                git url: 'https://github.com/ADirin/opt1_assign5_fall2024.git', branch: 'teh5'
+            }
+        }
+        stage('Build and Test') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh 'docker build -t my-java-app .'
+
+                    // Run the Docker container
+                    sh 'docker run --rm my-java-app'
+                }
+            }
+        }
+    }
+}
