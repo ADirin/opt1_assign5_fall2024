@@ -2,9 +2,10 @@ pipeline {
     agent any
 
     stages {
+     stages {
         stage('Build') {
             steps {
-                dir('src/main/java') {
+                dir('/path/to/workspace/src/main/java') {
                     bat 'mvn compile' // Compile source code using Maven
                 }
             }
