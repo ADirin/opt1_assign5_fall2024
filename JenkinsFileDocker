@@ -15,7 +15,7 @@ pipeline {
                     // PowerShell script to convert Windows path to Unix-style path
                     def workspaceUnixPath = bat(
                         script: '''
-                            powershell -NoProfile -Command "$p = (Get-Location).Path; $p = $p -replace '\\', '/'; $p = $p -replace 'C:', '/c'; Write-Output $p"
+                            powershell -NoProfile -Command "$p = (Get-Location).Path; $p = $p -replace '\\\\', '/'; $p = $p -replace 'C:', '/c'; Write-Output $p"
                         ''', 
                         returnStdout: true
                     ).trim()
@@ -31,3 +31,4 @@ pipeline {
         }
     }
 }
+
