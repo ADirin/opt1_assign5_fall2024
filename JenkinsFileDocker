@@ -21,6 +21,9 @@ pipeline {
                     ).trim()
                     echo "Workspace Unix Path: ${workspaceUnixPath}"
                     
+                    def dockerCommand = "docker run -d -t -v /var/run/docker.sock:/var/run/docker.sock -w ${workspaceUnixPath} ${DOCKER_IMAGE}"
+                    echo "Running Docker Command: ${dockerCommand}"
+                    
                     docker.image(DOCKER_IMAGE).inside("-v /var/run/docker.sock:/var/run/docker.sock -w ${workspaceUnixPath}") {
                         sh 'docker version'
                         sh 'docker build -t my-app .'
@@ -31,3 +34,4 @@ pipeline {
         }
     }
 }
+
