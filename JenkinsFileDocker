@@ -12,7 +12,13 @@ pipeline {
         stage('Build and Run Docker') {
             steps {
                 script {
-                    def workspaceUnixPath = bat(script: 'echo %WORKSPACE% | sed "s|\\\\|/|g" | sed "s|C:|/c|"', returnStdout: true).trim()
+                    // PowerShell script to convert Windows path to Unix-style path
+                    def workspaceUnixPath = bat(
+                        script: '''
+                            powershell -NoProfile -Command "$p = (Get-Location).Path; $p = $p -replace '\\', '/'; $p = $p -replace 'C:', '/c'; Write-Output $p"
+                        ''', 
+                        returnStdout: true
+                    ).trim()
                     echo "Workspace Unix Path: ${workspaceUnixPath}"
                     
                     docker.image(DOCKER_IMAGE).inside("-v /var/run/docker.sock:/var/run/docker.sock -w ${workspaceUnixPath}") {
